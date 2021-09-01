@@ -6,6 +6,6 @@ get started - mysql
 
 get started - api
 
- `npm start
+ `npm start`
 
 
