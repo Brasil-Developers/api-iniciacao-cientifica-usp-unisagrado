@@ -1,18 +1,10 @@
-
-// const express = require('express');
 import express from 'express';
+
+// Rotas
+import expRoute from './src/routes/personRoute';
+
 const app = express();
-const router = express.Router();
 
-import somar from './src/helper';
-console.log(somar(1,2))    
+app.use('/', expRoute);
 
-//Rotas
-const index = require('./src/routes');
-const personRoute = require('./src/routes/personRoute');
-app.use('/', index);
-app.use('/persons', personRoute);
-
-module.exports = app;
-
-
+export default app;
