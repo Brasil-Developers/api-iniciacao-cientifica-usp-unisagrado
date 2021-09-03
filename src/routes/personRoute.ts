@@ -1,7 +1,9 @@
 import expRoute from './route-express/index';
 
-import postt from '../controllers/person.controller';
+import inserInfo from '../controllers/getData';
 
-expRoute.get('/', postt);
+const verifyJWT = require('../authentication');
+
+expRoute.post('/getData', verifyJWT, inserInfo);
 
 export default expRoute;
