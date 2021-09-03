@@ -1,10 +1,11 @@
 import express from 'express';
 
 // Rotas
-import expRoute from './src/routes/personRoute';
+import route from './src/routes';
 
 const app = express();
-
-app.use('/', expRoute);
+const versionAPI:string = 'v1';
+app.use(`/${versionAPI}/`, route.person);
+app.use(`/${versionAPI}/user`, route.user);
 
 export default app;
