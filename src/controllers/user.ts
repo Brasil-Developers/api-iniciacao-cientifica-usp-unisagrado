@@ -20,6 +20,7 @@ const login = async (req:object, res:any) => {
     });
     return res.json({ auth: true, token_auth: token });
   } catch (err) {
+    console.log(err)
     return res.json({ auth: false, token_auth: null });
   }
 };

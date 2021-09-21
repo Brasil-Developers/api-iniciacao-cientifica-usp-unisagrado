@@ -1,6 +1,6 @@
 import redis from 'redis';
 
-const cache = redis.createClient();
+const cache = redis.createClient({ url: 'redis://redis:6379' });
 
 const getCache = (id:number) =>
   new Promise((resolve, reject) =>
