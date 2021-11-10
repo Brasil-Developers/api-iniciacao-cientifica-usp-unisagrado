@@ -1,10 +1,35 @@
 version: '3.1'
 services:
+  app:
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+    links:
+      - db
+
   db:
     image: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test_db
+      MYSQL_DATABASE: analise
     ports:
-      - "3306:3306"
+      - "3307:3307"
+  redis:
+    container_name: redis
+    hostname: redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
