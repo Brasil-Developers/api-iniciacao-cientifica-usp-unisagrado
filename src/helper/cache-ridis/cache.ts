@@ -1,10 +1,13 @@
 import redis from 'redis';
 
-const cache = redis.createClient();
+const cache = redis.createClient({
+  host: 'redis',
+  port: 6379
+});
 
 const getCache = (id:number) =>
   new Promise((resolve, reject) =>
-    cache.get(String(id), (e, data) => resolve(JSON.parse(data))));
+    cache.get(String(id), (e, data:any) => resolve(JSON.parse(data))));
 
 const setCache = (id:number, data:object) =>
   new Promise(() =>
