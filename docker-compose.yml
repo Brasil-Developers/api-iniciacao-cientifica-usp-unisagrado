@@ -18,9 +18,9 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test_db
+      MYSQL_DATABASE: analise
     ports:
-      - "3306:3306"
+      - "3307:3307"
   redis:
     container_name: redis
     hostname: redis
