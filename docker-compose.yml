@@ -1,15 +1,18 @@
-version: '3.1'
+version: "3.1"
 services:
   app:
     build: .
-    restart: always
     ports:
-      - '9000:9000'
+      - "9000:9000"
+      - "8181:8181"
     volumes:
       - ./:/app
     links:
       - db
-
+      - redis
+    environment:
+      - PORT=9000
+      - REDIS_URL=redis://redis:6379
   db:
     image: mysql
     restart: always
@@ -23,13 +26,13 @@ services:
     hostname: redis
     image: redis:latest
     ports:
-    - "6379:6379"
+      - "6379:6379"
   redis-commander:
     container_name: redis-commander
     hostname: redis-commander
     image: rediscommander/redis-commander:latest
     restart: always
     environment:
-    - REDIS_HOSTS=local:redis:6379
+      - REDIS_HOSTS=local:redis:6379
     ports:
-    - "8081:8081"
+      - "8081:8081"
