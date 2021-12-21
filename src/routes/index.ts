@@ -1,7 +1,5 @@
-import user from './user/index';
-import person from './personRoute';
+import v1 from './v1';
 
 export default {
-  user,
-  person,
+  v1,
 };

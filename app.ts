@@ -1,14 +1,16 @@
 import express from 'express';
-
-// Rotas
-import route from './src/routes';
+import v1 from './src/routes/index';
 
 const app = express();
 
-app.use(express.urlencoded());
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());   
 
-const versionAPI:string = 'v1';
-app.use(`/${versionAPI}/`, route.person);
-app.use(`/${versionAPI}/user`, route.user);
+app.use('/api/v1', v1.v1);   
+app.use('/api/version', (req, res) => {
+    res.send({
+        'ok': true
+    })
+});
+
 export default app;

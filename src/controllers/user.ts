@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const { User } = require('../models');
 
-const login = async (req:object, res:any) => {
+const login = async (req:any, res:any) => {
   try {
     const response = await User.findAll({
       where: {
