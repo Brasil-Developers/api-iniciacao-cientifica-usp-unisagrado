@@ -4,11 +4,13 @@ import { Controller, HttpRequest, HttpResponse } from '../../../protocols';
 import { badRequest, ok, serverError } from '../../../helpers/http-helper';
 import { MissingParamError } from '../../../errors';
 import { GenericError } from '../../../errors/generic-error';
-const { User } = require('../../../../domain/models');
+import { AddAccount } from '../../../../domain/usercases/account/add-account';
+import { Account } from '../../../../domain/models/Account';
 
 export class SignUpController implements Controller {
-    constructor() {
-
+    private readonly account: AddAccount
+    constructor(account: AddAccount) {
+        this.account = account;
     }
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -37,27 +39,20 @@ export class SignUpController implements Controller {
                 }
             }
 
-            const exists = await User.findOne({
-                where: {
-                    login,
-                },
-            });
-
-            if (exists) {
-                return badRequest(new GenericError('Usuario com o login informado já existe.'));
+            if(senha !== senha_confirmacao) {
+                return badRequest(new GenericError('Senhas não conferem'))
             }
 
-            const cryptSenha = await bcrypt.hash(senha, 10);
-
-            const response = await User.create({
-                nome,
+            const account: Account = await this.account.add({
+                nome: nome,
                 data_nasc,
                 cpf,
                 sexo,
                 area_atuacao,
                 numero_crfa,
                 login,
-                cryptSenha,
+                senha,
+                senha_confirmacao,
                 questao1,
                 questao1_outro,
                 questao2,
@@ -65,11 +60,11 @@ export class SignUpController implements Controller {
                 ciencia_confirmacao
             });
 
-            if (!response) {
+            if (!account) {
                 return badRequest(new GenericError('Erro ao criar usuario.'));
             }
 
-            return ok({ data: response, message: 'Usuario criado com sucesso.' });
+            return ok({ data: account, message: 'Usuario criado com sucesso.' });
         } catch (err: any) {
             return serverError(Error(err));
         }

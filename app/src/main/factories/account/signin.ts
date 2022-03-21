@@ -1,11 +1,19 @@
+import { DbLoginAccount } from "../../../data/usecases/account/db-login-account";
+import { BcryptAdapter } from "../../../infra/criptography/bcrypt-adapter";
 import { LogWinstonRepository } from "../../../infra/local/log-repository/log-repository";
+import { LoginAccountRepository } from "../../../infra/repositories/account/login-repository";
 import { SignInController } from "../../../presentation/controllers/account/signin/signin";
 import { Controller } from "../../../presentation/protocols";
 import { LogControllerDecorator } from "../../decoratos/logs";
 
 
 export const makeSignInController = (): Controller => {
-    const singInController = new SignInController();
+    const salt = 12;
+    const bcryptAdapter = new BcryptAdapter(salt);
+    const accountRepository = new LoginAccountRepository();
+    const loginAccount = new DbLoginAccount(bcryptAdapter, accountRepository);
+    const singInController = new SignInController(loginAccount);
     const logWinstonRepository = new LogWinstonRepository()
+    
     return new LogControllerDecorator(singInController, logWinstonRepository);
 }

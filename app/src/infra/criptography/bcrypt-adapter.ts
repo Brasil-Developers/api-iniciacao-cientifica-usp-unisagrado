@@ -8,8 +8,14 @@ export class BcryptAdapter implements Encrypter {
     constructor (salt: number) {
         this.salt = salt
     }
+    
     async encrypt(value: string): Promise<string> {
-        const hash = await bcrypt.hash(value, this.salt)
+        const hash = bcrypt.hashSync(value, this.salt)
         return hash;
+    }
+
+    async compare(value: string, hash: string): Promise<boolean> {
+        const isValid = bcrypt.compareSync(value, hash)
+        return isValid
     }
 }

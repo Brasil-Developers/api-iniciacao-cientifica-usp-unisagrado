@@ -1,6 +1,5 @@
 import app from './config/app';
-
-function normalizaPort(val:any) {
+function normalizaPort(val: any) {
   const port = parseInt(val, 10);
   if (Number.isNaN(port)) {
     return val;

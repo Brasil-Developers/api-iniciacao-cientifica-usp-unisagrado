@@ -1,26 +1,23 @@
 
 import jwt from 'jsonwebtoken';
 import { Controller, HttpRequest, HttpResponse } from '../../../protocols';
-import { ok, serverError } from '../../../helpers/http-helper';
-const { User } = require('../../../../domain/models');
-
+import { badRequest, ok, serverError } from '../../../helpers/http-helper';
+import { LoginAccount } from '../../../../domain/usercases/account/login-account';
+import { GenericError } from '../../../errors/generic-error';
+import { Account } from '../../../../domain/models/Account';
 export class SignInController implements Controller {
-    constructor() {
-
+    private readonly loginAccount: LoginAccount
+    constructor(loginAccount: LoginAccount) {
+        this.loginAccount = loginAccount;
     }
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         try {
-            const user = await User.findOne({
-                where: {
-                    email: httpRequest.body.login,
-                    password: httpRequest.body.password,
-                },
-                attributes: ['id'],
-            });
+
+            const user: Account = await this.loginAccount.login(httpRequest.body);
 
             if (!user) {
-                throw new Error('Usuário ou senha inválidos.');
+                return badRequest(new GenericError('Usuário ou senha inválidos.'));
             }
 
             const id = Number(user.id);

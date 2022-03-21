@@ -1,10 +1,10 @@
 import express from 'express';
 import setupRoutes from './routes';
+import setupMiddlewares from './middlewares';
+import setupSequelize from './sequelize';
 
 const app = express();
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());   
+setupMiddlewares(app);
 setupRoutes(app);
-
+setupSequelize();
 export default app;

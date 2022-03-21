@@ -1,6 +1,6 @@
 export class GenericError extends Error {
     constructor (msg: string) {
-        super(`Erro: ${msg}`)
+        super(`${msg}`)
         this.name = 'GenericError'
     }
 }
