@@ -1,12 +1,14 @@
 version: "3.1"
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
     ports:
-      - "9000:9000"
       - "8181:8181"
+      - "9000:9000"
     volumes:
-      - ./:/app
+      - ./app:/app
     links:
       - db
       - redis
@@ -14,13 +16,19 @@ services:
       - PORT=9000
       - REDIS_URL=redis://redis:6379
   db:
-    image: mysql
+    image: mysql:5.7
     restart: always
     environment:
+      MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: analise
+      MYSQL_PASSWORD: root
     ports:
-      - "3307:3307"
+      - "3307:3306"
+    expose:
+      - "3307"
+    volumes:
+      - ./mysql:/var/lib/mysql
+
   redis:
     container_name: redis
     hostname: redis
