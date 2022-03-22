@@ -18,7 +18,6 @@ export class AddAccountRepository implements IAddAccountRepository {
 
     async add(accountData: AddAccountModel): Promise<Account | Error> {
 
-        throw new Error("Method not implemented.");
         if (await this._exists(accountData.login)) {
             return new GenericError('Login already exists');
         }

@@ -19,7 +19,7 @@ export class GetDetailController implements Controller {
             if (!user) {
                 return badRequest(new GenericError('Usuário não encontrado.'));
             }
-            return ok(user);
+            return ok( { data: user, message: '' });
 
         } catch (error: any) {
             return serverError(error);

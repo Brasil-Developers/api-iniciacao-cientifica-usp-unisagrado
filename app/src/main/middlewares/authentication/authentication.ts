@@ -1,20 +1,24 @@
 /* eslint-disable */
+import { NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { GenericError } from '../../../presentation/errors/generic-error';
-import { badRequest } from '../../../presentation/helpers/http-helper';
+import { badRequest, serverError } from '../../../presentation/helpers/http-helper';
+import { HttpResponse } from '../../../presentation/protocols';
 
-const verifyJWT = (req: any, res: any, next: any) => {
-  const token = (req.headers['x-access-token'] || req.headers['authorization']).split(' ')[0];
-  
-  if (!token) return badRequest(new GenericError('No token provided.'));
+export const verifyJWT = (req: any, res: any, next: NextFunction): HttpResponse | void => {
+  try {
+    const token = (req.headers['x-access-token'] || req.headers['authorization']);
 
-  jwt.verify(token, 'teste', (err: any, decoded: any) => {
-    if (err) return badRequest(new GenericError('Failed to authenticate token.'));
-    req.body.userId = decoded.id;
-    next();
-  });
-}
+    if (!token) return badRequest(new GenericError('No token provided.'));
 
-export {
-  verifyJWT
+    const decoded: any = jwt.verify(token.split(' ')[0], 'teste', (err: any, decoded: any) => {
+      if (err) throw new GenericError('Invalid token.');
+      req.body.userId = decoded.id;
+
+      return next();
+    });
+    
+  } catch (err: any) {
+    return res.status(500).json({ error: err.message || `Server Error` });
+  }
 }

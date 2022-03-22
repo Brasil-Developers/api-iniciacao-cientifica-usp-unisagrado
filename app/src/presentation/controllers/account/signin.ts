@@ -24,7 +24,7 @@ export class SignInController implements Controller {
             const token = jwt.sign({ id }, 'teste', {
                 // expiresIn: 300,
             });
-            return ok({ auth: true, token_auth: token });
+            return ok({ data: { token }, message: 'Usuário autenticado com sucesso.' });
 
         } catch (error: any) {
             return serverError(error);
