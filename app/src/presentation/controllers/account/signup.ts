@@ -1,11 +1,11 @@
 
 
-import { Controller, HttpRequest, HttpResponse } from '../../../protocols';
-import { badRequest, ok, serverError } from '../../../helpers/http-helper';
-import { MissingParamError } from '../../../errors';
-import { GenericError } from '../../../errors/generic-error';
-import { AddAccount } from '../../../../domain/usercases/account/add-account';
-import { Account } from '../../../../domain/models/Account';
+import { Controller, HttpRequest, HttpResponse } from '../../protocols';
+import { badRequest, ok, serverError } from '../../helpers/http-helper';
+import { MissingParamError } from '../../errors';
+import { GenericError } from '../../errors/generic-error';
+import { AddAccount } from '../../../domain/usercases/account/add-account';
+import { Account } from '../../../domain/models/Account';
 
 export class SignUpController implements Controller {
     private readonly account: AddAccount
@@ -43,7 +43,7 @@ export class SignUpController implements Controller {
                 return badRequest(new GenericError('Senhas não conferem'))
             }
 
-            const account: Account = await this.account.add({
+            const account: Account | Error = await this.account.add({
                 nome: nome,
                 data_nasc,
                 cpf,
@@ -59,6 +59,10 @@ export class SignUpController implements Controller {
                 questao2_outro,
                 ciencia_confirmacao
             });
+
+            if( account instanceof Error) {
+                return badRequest(new GenericError(account.message))
+            }
 
             if (!account) {
                 return badRequest(new GenericError('Erro ao criar usuario.'));

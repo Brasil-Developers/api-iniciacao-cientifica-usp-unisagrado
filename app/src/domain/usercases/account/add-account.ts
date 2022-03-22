@@ -19,5 +19,5 @@ export interface AddAccountModel {
 }
 
 export interface AddAccount {
-    add(account: AddAccountModel): Promise<Account>
+    add(account: AddAccountModel): Promise<Account | Error>
 }

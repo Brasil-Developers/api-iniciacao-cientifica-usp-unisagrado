@@ -2,7 +2,8 @@ import { DbAddAccount } from "../../../data/usecases/account/db-add-account";
 import { BcryptAdapter } from "../../../infra/criptography/bcrypt-adapter";
 import { LogWinstonRepository } from "../../../infra/local/log-repository/log-repository";
 import { AddAccountRepository } from "../../../infra/repositories/account/add-repository";
-import { SignUpController } from "../../../presentation/controllers/account/signup/signup";
+
+import { SignUpController } from "../../../presentation/controllers/account/signup";
 import { Controller } from "../../../presentation/protocols";
 import { LogControllerDecorator } from "../../decoratos/logs";
 

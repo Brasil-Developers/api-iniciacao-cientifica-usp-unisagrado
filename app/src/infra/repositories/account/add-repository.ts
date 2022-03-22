@@ -1,6 +1,8 @@
 import { AddAccountRepository as IAddAccountRepository } from "../../../data/protocols/account/add-account-repository";
 import { Account } from "../../../domain/models/Account";
 import { AddAccountModel } from "../../../domain/usercases/account/add-account";
+import { GenericError } from "../../../presentation/errors/generic-error";
+import { badRequest } from "../../../presentation/helpers/http-helper";
 
 export class AddAccountRepository implements IAddAccountRepository {
 
@@ -14,10 +16,11 @@ export class AddAccountRepository implements IAddAccountRepository {
         return !!exists;
     }
 
-    async add(accountData: AddAccountModel): Promise<Account> {
+    async add(accountData: AddAccountModel): Promise<Account | Error> {
 
+        throw new Error("Method not implemented.");
         if (await this._exists(accountData.login)) {
-            throw new Error('Login already exists');
+            return new GenericError('Login already exists');
         }
         const response = await Account.create({
             nome: accountData.nome,

@@ -1,10 +1,10 @@
 
 import jwt from 'jsonwebtoken';
-import { Controller, HttpRequest, HttpResponse } from '../../../protocols';
-import { badRequest, ok, serverError } from '../../../helpers/http-helper';
-import { LoginAccount } from '../../../../domain/usercases/account/login-account';
-import { GenericError } from '../../../errors/generic-error';
-import { Account } from '../../../../domain/models/Account';
+import { Controller, HttpRequest, HttpResponse } from '../../protocols';
+import { badRequest, ok, serverError } from '../../helpers/http-helper';
+import { LoginAccount } from '../../../domain/usercases/account/login-account';
+import { GenericError } from '../../errors/generic-error';
+import { Account } from '../../../domain/models/Account';
 export class SignInController implements Controller {
     private readonly loginAccount: LoginAccount
     constructor(loginAccount: LoginAccount) {
@@ -22,7 +22,7 @@ export class SignInController implements Controller {
 
             const id = Number(user.id);
             const token = jwt.sign({ id }, 'teste', {
-                expiresIn: 300,
+                // expiresIn: 300,
             });
             return ok({ auth: true, token_auth: token });
 
