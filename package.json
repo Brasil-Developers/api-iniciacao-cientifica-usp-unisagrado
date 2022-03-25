@@ -2,9 +2,9 @@
   "name": "api-iniciacao-cientifica-usp-unisagrado",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main/server.ts",
+  "main": "app/src/main/server.ts",
   "scripts": {
-    "start": "npx ts-node-dev --inspect=0.0.0.0 --respawn --transpile-only ./src/main/server.ts",
+    "start": "npx ts-node-dev --inspect=0.0.0.0 --respawn --transpile-only ./app/src/main/server.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint --fix ./src/*"
