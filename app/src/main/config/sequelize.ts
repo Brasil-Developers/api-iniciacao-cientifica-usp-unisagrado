@@ -4,6 +4,7 @@ export default async () => {
     console.log('[DB] Iniciando conexão com o banco de dados...');
 
     const sequelize = new Sequelize({
+        host: process.env.DB_HOST || 'localhost',
         dialect: process.env.DB_DIALECT || 'mysql',
         database: process.env.DB_DATABASE || 'analise',
         username: process.env.DB_USER || "root",
