@@ -43,7 +43,7 @@ export class AccountRepository implements IAddAccountRepository, IGetAccountRepo
     }
 
 
-    async get(accountId: number): Promise<Account> {
+    async get(accountId: number): Promise<Account | Error> {
 
         const user = await Account.findOne({
             where: {
@@ -52,10 +52,15 @@ export class AccountRepository implements IAddAccountRepository, IGetAccountRepo
             attributes: ['id','nome', 'data_nasc', 'cpf', 'sexo', 'area_atuacao', 'numero_crfa', 'login', 'senha', 'questao1', 'questao1_outro', 'questao2', 'questao2_outro', 'ciencia_confirmacao'],
         });
 
+
+        if(!user) {
+            return new GenericError('User not found');
+        }
+        
         return user as Account;
     }
 
-    async login(accountData: LoginAccountModel): Promise<Account> {
+    async login(accountData: LoginAccountModel): Promise<Account | Error> {
 
         const user = await Account.findOne({
             where: {
@@ -63,6 +68,10 @@ export class AccountRepository implements IAddAccountRepository, IGetAccountRepo
             },
             attributes: ['id','nome', 'data_nasc', 'cpf', 'sexo', 'area_atuacao', 'numero_crfa', 'login', 'senha', 'questao1', 'questao1_outro', 'questao2', 'questao2_outro', 'ciencia_confirmacao'],
         });
+
+        if(!user) {
+            return new GenericError('User not found or password is wrong');
+        }
 
         return user as Account;
     }

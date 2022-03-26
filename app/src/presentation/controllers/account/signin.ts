@@ -14,10 +14,10 @@ export class SignInController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         try {
 
-            const user: Account = await this.loginAccount.login(httpRequest.body);
+            const user: Account | Error = await this.loginAccount.login(httpRequest.body);
 
-            if (!user) {
-                return badRequest(new GenericError('Usuário ou senha inválidos.'));
+            if(user instanceof Error){
+                return badRequest(new GenericError(user.message));
             }
 
             const id = Number(user.id);
