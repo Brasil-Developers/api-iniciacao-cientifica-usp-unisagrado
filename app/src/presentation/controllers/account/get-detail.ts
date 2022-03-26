@@ -15,7 +15,7 @@ export class GetDetailController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         try {
             console.log(httpRequest)
-            const user: Account = await this.getAccount.get(httpRequest.body.userId);
+            const user: Account | Error = await this.getAccount.get(httpRequest.body.userId);
             if (!user) {
                 return badRequest(new GenericError('Usuário não encontrado.'));
             }

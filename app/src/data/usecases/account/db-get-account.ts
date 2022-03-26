@@ -9,8 +9,8 @@ export class DbGetAccount implements GetAccount {
         this.addAccpimtRepository = addAccpimtRepository
     }
 
-    async get(accountId: number): Promise<Account> {
-        const account = await this.addAccpimtRepository.get(accountId)
+    async get(accountId: number): Promise<Account | Error> {
+        const account: Account | Error = await this.addAccpimtRepository.get(accountId)
         return new Promise(resolve => resolve(account))
     }
 }

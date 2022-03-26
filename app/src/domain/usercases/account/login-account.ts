@@ -7,5 +7,5 @@ export interface LoginAccountModel {
 }
 
 export interface LoginAccount {
-    login(account: LoginAccountModel): Promise<Account>
+    login(account: LoginAccountModel): Promise<Account | Error>
 }
