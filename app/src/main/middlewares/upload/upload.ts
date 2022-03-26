@@ -1,5 +1,5 @@
 import { MulterUpload } from '../../../infra/local/upload/multer';
-import jwt  from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export const upload = (req: any, res: any, next: any) => {
     const uploadService = new MulterUpload({
@@ -9,8 +9,9 @@ export const upload = (req: any, res: any, next: any) => {
         },
         /** Define a forma como são gravados os arquivos enviados */
         filename: (req: any, file: any, cb: any) => {
-            const { userId } = req;
-            const token = jwt.sign({ id: userId }, 'teste');
+            const token = jwt.sign({ file: file.originalname }, 'teste');
+            req.body.nome = file.originalname;
+            req.body.arquivo = token;
             cb(null, token);
         }
     });

@@ -15,7 +15,7 @@ export class DbLoginAccount implements LoginAccount {
     async login(accountData: LoginAccountModel): Promise<Account> {
 
         const findAccount: Account = await this.loginAccpimtRepository.login(accountData)
-        let validate = this.encrypter.compare(accountData.senha, findAccount.getDataValue('senha'));
+        let validate = await this.encrypter.compare(accountData.senha, findAccount.getDataValue('senha'));
         if (!validate) {
             throw new Error('Invalid password')
         }

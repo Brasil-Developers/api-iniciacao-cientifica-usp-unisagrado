@@ -2,7 +2,9 @@
 
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 import { badRequest, ok, serverError } from '../../helpers/http-helper';
-import { UploadData } from '../../../domain/usercases/upload/upload-data';
+import { UploadData, UploadDataModel } from '../../../domain/usercases/upload/upload-data';
+import { Document } from '../../../domain/models/Document';
+import { GenericError } from '../../errors/generic-error';
 
 export class UploadController implements Controller {
     private readonly uploadData: UploadData;
@@ -13,7 +15,11 @@ export class UploadController implements Controller {
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         try {
-            const fileUploaded = await this.uploadData.upload(httpRequest.body);
+            const data = Object.assign(httpRequest.body, {}, {
+                autor: httpRequest.body.autor || 'Sistema',
+            })
+
+            const fileUploaded = await this.uploadData.upload(data);
             return ok({ data: fileUploaded });
         } catch (err: any) {
             return serverError(Error(err));
