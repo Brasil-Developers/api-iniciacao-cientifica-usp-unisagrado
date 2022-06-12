@@ -13,6 +13,6 @@ export default async () => {
         models: [__dirname + '/../../domain/models'],
     } as SequelizeOptions);
 
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: false, alter: true });
     return sequelize;
 };
