@@ -13,7 +13,6 @@ export class AddSpeakerController implements Controller {
         try {
             const data = Object.assign(httpRequest.body, {}, {});
             const speakerResult = await this.speakerData.add(data);
-
             return ok({ data: speakerResult });
         } catch (err: any) {
             return serverError(Error(err));

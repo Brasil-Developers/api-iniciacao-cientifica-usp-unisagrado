@@ -1,45 +1,44 @@
-import { Optional } from 'sequelize'
 import { Table, Model, Column, DataType } from 'sequelize-typescript'
 
 @Table
 export class Account extends Model {
   @Column
-  nome: string
+  nome!: string
 
   @Column({
     type: DataType.DATEONLY
   })
-  data_nasc: Date
+  data_nasc!: Date
 
   @Column
-  cpf: string
+  cpf!: string
 
   @Column
-  sexo: string
+  sexo!: string
 
   @Column
-  area_atuacao: number
+  area_atuacao!: number
 
   @Column
-  numero_crfa: string
+  numero_crfa!: string
 
   @Column
-  login: string
+  login!: string
 
   @Column
-  senha: string
+  senha!: string
 
   @Column
-  questao1: number
+  questao1!: number
 
   @Column
-  questao1_outro: string
+  questao1_outro!: string
 
   @Column
-  questao2: number
+  questao2!: number
 
   @Column
-  questao2_outro: string
+  questao2_outro!: string
   
   @Column
   ciencia_confirmacao?: boolean
@@ -47,5 +46,5 @@ export class Account extends Model {
   @Column({
     defaultValue: 1,
   })
-  nivel_acesso: number
+  nivel_acesso!: number
 }

@@ -7,9 +7,9 @@ import { HttpResponse } from '../../../presentation/protocols';
 
 export const verifyJWT = (req: any, res: any, next: NextFunction): HttpResponse | void => {
   try {
-    const token = (req.headers['x-access-token'] || req.headers['authorization']);
-
-    if (!token) return badRequest(new GenericError('No token provided.'));
+    const token = (req?.headers['x-access-token'] || req?.headers['authorization'] || null);
+  
+    if (!token || token == null) throw new GenericError('No token provided.');
 
     const decoded: any = jwt.verify(token.split(' ')[0], 'teste', (err: any, decoded: any) => {
       if (err) throw new GenericError('Invalid token.');
@@ -19,6 +19,7 @@ export const verifyJWT = (req: any, res: any, next: NextFunction): HttpResponse 
     });
     
   } catch (err: any) {
+    console.log(err);
     return res.status(500).json({ error: err.message || `Server Error` });
   }
 }

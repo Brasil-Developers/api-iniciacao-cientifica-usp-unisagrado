@@ -9,6 +9,7 @@ services:
       - "9000:9000"
     volumes:
       - ./app:/app
+      - ./:/app
     links:
       - db
       - redis

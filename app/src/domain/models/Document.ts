@@ -1,16 +1,15 @@
-import { Optional } from 'sequelize'
 import { Table, Model, Column } from 'sequelize-typescript'
 
 @Table
 export class Document extends Model {
   @Column
-  nome: string
+  nome!: string
   @Column
-  autor: string
+  autor!: string
   @Column
-  descricao: string
+  descricao!: string
   @Column
-  arquivo: string
+  arquivo!: string
   @Column
-  categoria: string
+  categoria!: string
 }

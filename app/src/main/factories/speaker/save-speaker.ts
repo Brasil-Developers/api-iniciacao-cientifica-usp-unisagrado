@@ -9,7 +9,6 @@ import { LogControllerDecorator } from "../../decoratos/logs";
 
 
 export const makeSaveSpeakerController = (): Controller => {
-
     const addSpeakerRepository = new SpeakerRepository();
     const addSpeaker = new DbAddSpeaker(addSpeakerRepository);
     const addSpeakerController = new AddSpeakerController(addSpeaker);

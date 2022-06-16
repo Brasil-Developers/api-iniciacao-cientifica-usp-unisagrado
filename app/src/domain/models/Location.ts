@@ -4,9 +4,9 @@ import { Table, Model, Column, DataType, Length } from 'sequelize-typescript'
 @Table
 export class Location extends Model {
     @Column
-    nome: string
+    nome!: string
     @Column
-    cidade: string
+    cidade!: string
     @Column
-    estado: string
+    estado!: string
 }
