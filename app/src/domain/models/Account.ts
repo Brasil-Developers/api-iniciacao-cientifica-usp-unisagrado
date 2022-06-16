@@ -1,5 +1,6 @@
-import { Table, Model, Column, DataType } from 'sequelize-typescript'
-
+import { Table, Model, Column, DataType, BelongsTo, BelongsToMany, HasMany, ForeignKey } from 'sequelize-typescript'
+import { Document } from './Document'
+import { Location } from './Location'
 @Table
 export class Account extends Model {
   @Column
@@ -39,7 +40,7 @@ export class Account extends Model {
 
   @Column
   questao2_outro!: string
-  
+
   @Column
   ciencia_confirmacao?: boolean
 
@@ -47,4 +48,10 @@ export class Account extends Model {
     defaultValue: 1,
   })
   nivel_acesso!: number
+
+  @HasMany(() => Document)
+  documents?: Document[]
+
+  @ForeignKey(() => Location)
+  location?: Location
 }

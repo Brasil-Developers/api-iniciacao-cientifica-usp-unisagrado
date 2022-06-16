@@ -8,5 +8,5 @@ export interface AddSpeakerSurgeryModel {
 }
 
 export interface AddSpeakerSurgery {
-    add(speaker: AddSpeakerSurgeryModel): Promise<Speaker | Error>
+    add(speakerSurgery: AddSpeakerSurgeryModel): Promise<Speaker | Error>
 }

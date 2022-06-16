@@ -1,5 +1,8 @@
 import { Optional } from 'sequelize'
-import { Table, Model, Column, DataType, Length } from 'sequelize-typescript'
+import { Table, Model, Column, DataType, Length, HasMany, ForeignKey } from 'sequelize-typescript'
+import { Account } from './Account'
+import { Location } from './Location'
+import { SpeakerSurgery } from './SpeakerSurgery'
 
 @Table
 export class Speaker extends Model {
@@ -11,6 +14,7 @@ export class Speaker extends Model {
     })
     data!: string
 
+    @ForeignKey(() => Location)
     @Column
     local!: number
 
@@ -25,4 +29,12 @@ export class Speaker extends Model {
         type: DataType.TEXT
     })
     descricao!: string
+
+    @ForeignKey(() => Account)
+    @Column
+    criado_por!: number
+
+    @HasMany(() => SpeakerSurgery)
+    speakerSurgeries!: SpeakerSurgery[]
+    
 }

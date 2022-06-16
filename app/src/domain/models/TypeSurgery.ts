@@ -1,5 +1,6 @@
 import { Optional } from 'sequelize'
-import { Table, Model, Column, DataType, Length } from 'sequelize-typescript'
+import { Table, Model, Column, DataType, Length, HasMany } from 'sequelize-typescript'
+import { SpeakerSurgery } from './SpeakerSurgery'
 
 @Table
 export class TypeSurgery extends Model {
@@ -10,4 +11,7 @@ export class TypeSurgery extends Model {
         type: DataType.STRING,
     })
     tipoSlug!: string
+
+    @HasMany(() => SpeakerSurgery)
+    speakerSurgeries!: SpeakerSurgery[]
 }
