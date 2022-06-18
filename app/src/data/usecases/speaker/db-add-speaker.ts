@@ -14,11 +14,12 @@ export class DbAddSpeaker implements AddSpeaker {
 
         // Check if speaker already exists
         const speakerExists: boolean = await this.speakerRepository.getByNRegistroCC(speaker.n_registro_cc);
-        if (!speakerExists) {
+
+        if (speakerExists === true) {
             return new Error("Speaker already exists");
         }
 
-        const response = await this.speakerRepository.add(speaker);
-        return response;
+        const speakerData = await this.speakerRepository.add(speaker);
+        return speakerData;
     }
 }

@@ -1,12 +1,15 @@
-import { Speaker } from "../../models/Speaker";
+import { SpeakerSurgery } from "../../models/SpeakerSurgery";
 
 export interface AddSpeakerSurgeryModel {
-    tipoSlug: string
+    tipo_surgery: string
+    speaker: number
     idade_ano: number
-    idade_meses: number
-    data: string
+    idade_mes: number,
+    data_surgery: string,
+    des_type: string,
+    obs_type: string
 }
 
 export interface AddSpeakerSurgery {
-    add(speakerSurgery: AddSpeakerSurgeryModel): Promise<Speaker | Error>
+    add(speakerSurgery: AddSpeakerSurgeryModel): Promise<SpeakerSurgery | Error>
 }

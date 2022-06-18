@@ -12,8 +12,8 @@ export class AddSpeakerSurgeryController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         try {
             const data = Object.assign(httpRequest.body, {}, {});
-            const speakerResult = await this.speakerData.add(data);
-            return ok({ data: speakerResult });
+            const resSurgery = await this.speakerData.add(data);
+            return ok({ data: resSurgery });
         } catch (err: any) {
             return serverError(Error(err));
         }

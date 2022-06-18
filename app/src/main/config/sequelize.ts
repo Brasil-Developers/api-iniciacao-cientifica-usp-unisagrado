@@ -16,7 +16,7 @@ export default async () => {
         }
     } as SequelizeOptions);
 
-    await sequelize.sync({ force: true, alter: true });
+    await sequelize.sync({ force: false, alter: true });
 
     return sequelize;
 };

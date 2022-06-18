@@ -12,7 +12,7 @@ export class SpeakerRepository implements IAddSpeakerRepository, IGetAllSpeakerR
             }
         });
 
-        if(response) {
+        if(response != null) {
             return true;
         }
 
