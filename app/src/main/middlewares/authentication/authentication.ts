@@ -9,8 +9,8 @@ export const verifyJWT = (req: any, res: any, next: NextFunction): HttpResponse 
   try {
     const token = (req?.headers['x-access-token'] || req?.headers['authorization'] || null);
 
-    if (!token || token == null) throw new GenericError('No token provided.');
-
+    if (!token || token == null) return res.status(403).json({ error: 'No token provided.' });
+    
     const decoded: any = jwt.verify(token.split(' ')[0], 'teste', async (err: any, decoded: any) => {
       if (err) throw new GenericError('Invalid token.');
 
