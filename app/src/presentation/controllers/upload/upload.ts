@@ -1,10 +1,8 @@
 
 
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
-import { badRequest, ok, serverError } from '../../helpers/http-helper';
-import { UploadData, UploadDataModel } from '../../../domain/usercases/upload/upload-data';
-import { Document } from '../../../domain/models/Document';
-import { GenericError } from '../../errors/generic-error';
+import { ok, serverError } from '../../helpers/http-helper';
+import { UploadData } from '../../../domain/usercases/upload/upload-data';
 
 export class UploadController implements Controller {
     private readonly uploadData: UploadData;

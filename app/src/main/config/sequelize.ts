@@ -11,8 +11,12 @@ export default async () => {
         password: process.env.DB_PASSWORD || "root",
         port: process.env.DB_PORT || 3307,
         models: [__dirname + '/../../domain/models'],
+        retry: {
+            max: 10,
+        }
     } as SequelizeOptions);
 
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: false, alter: true });
+
     return sequelize;
 };
