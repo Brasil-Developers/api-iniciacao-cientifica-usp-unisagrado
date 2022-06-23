@@ -1,17 +1,14 @@
-import { Speaker } from "../../../domain/models/Speaker";
-import { SpeakerSurgery } from "../../../domain/models/SpeakerSurgery";
-import { AddSpeakerSurgery } from "../../../domain/usercases/speaker-surgery/speaker-surgery";
 import { AddSpeaker } from "../../../domain/usercases/speaker/add-speaker";
-import { ok, serverError } from "../../helpers/http-helper";
+import { GenericError } from "../../errors/generic-error";
+import { MissingParamError } from "../../errors/missing-param-error";
+import { badRequest, ok, serverError } from "../../helpers/http-helper";
 import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 
 export class AddSpeakerController implements Controller {
     private readonly speakerData: AddSpeaker;
-    private readonly speakerSurgeryData: AddSpeakerSurgery;
 
-    constructor(speakerData: AddSpeaker, speakerSurgeryData: AddSpeakerSurgery) {
+    constructor(speakerData: AddSpeaker) {
         this.speakerData = speakerData;
-        this.speakerSurgeryData = speakerSurgeryData;
     }
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -19,10 +16,17 @@ export class AddSpeakerController implements Controller {
             let data = httpRequest.body;
             data.criado_por = httpRequest.body.userId;
 
+            const requiredFields = ['n_registro_cc', 'data', 'local', 'sexo', 'condicao_flp', 'descricao'];
+            for (const field of requiredFields) {
+                if (!httpRequest.body[field]) {
+                    return badRequest(new MissingParamError(field))
+                }
+            }
+            
             const speakerResult = await this.speakerData.add(data);
 
             if (speakerResult instanceof Error) {
-                return serverError(speakerResult);
+                return badRequest(new GenericError(speakerResult.message));
             }
 
             return ok({

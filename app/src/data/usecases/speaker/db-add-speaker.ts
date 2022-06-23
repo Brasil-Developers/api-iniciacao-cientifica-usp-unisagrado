@@ -11,12 +11,16 @@ export class DbAddSpeaker implements AddSpeaker {
     }
 
     async add(speaker: AddSpeakerModel): Promise<Speaker | Error> {
+        // Check speaker contains fields
+        if (speaker.n_registro_cc == null || typeof speaker.n_registro_cc === 'undefined') {
+            throw new Error("n_registro_cc not null");
+        }
 
         // Check if speaker already exists
         const speakerExists: boolean = await this.speakerRepository.getByNRegistroCC(speaker.n_registro_cc);
 
         if (speakerExists === true) {
-            return new Error("Speaker already exists");
+            throw new Error("Speaker already exists");
         }
 
         const speakerData = await this.speakerRepository.add(speaker);
