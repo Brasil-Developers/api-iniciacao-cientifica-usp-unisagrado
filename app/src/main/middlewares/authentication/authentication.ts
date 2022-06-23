@@ -11,7 +11,7 @@ export const verifyJWT = (req: any, res: any, next: NextFunction): HttpResponse 
 
     if (!token || token == null) return res.status(403).json({ error: 'No token provided.' });
     
-    const decoded: any = jwt.verify(token.split(' ')[0], 'teste', async (err: any, decoded: any) => {
+    const decoded: any = jwt.verify(token.split(' ')[0], process.env.SECRET || "sistema-fono-usc-centrinho", async (err: any, decoded: any) => {
       if (err) throw new GenericError('Invalid token.');
 
       const account = await Account.findOne({
