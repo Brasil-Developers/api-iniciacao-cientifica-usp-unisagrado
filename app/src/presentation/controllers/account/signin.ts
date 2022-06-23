@@ -21,7 +21,7 @@ export class SignInController implements Controller {
             }
 
             const id = Number(user.id);
-            const token = jwt.sign({ id }, 'teste', {
+            const token = jwt.sign({ id }, process.env.SECRET || "sistema-fono-usc-centrinho", {
                 // expiresIn: 300,
             });
             return ok({ data: { token }, message: 'Usuário autenticado com sucesso.' });

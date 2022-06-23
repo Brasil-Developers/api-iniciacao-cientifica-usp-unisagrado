@@ -9,7 +9,7 @@ export const upload = (req: any, res: any, next: any) => {
         },
         /** Define a forma como são gravados os arquivos enviados */
         filename: (req: any, file: any, cb: any) => {
-            const token = jwt.sign({ file: file.originalname }, 'teste');
+            const token = jwt.sign({ file: file.originalname }, process.env.SECRET || "sistema-fono-usc-centrinho");
             req.body.nome = file.originalname;
             req.body.arquivo = token;
             cb(null, token);
