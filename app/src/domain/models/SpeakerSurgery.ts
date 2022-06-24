@@ -36,6 +36,6 @@ export class SpeakerSurgery extends Model {
     @Column({
         type: DataType.TEXT,
     })
-    obs_type!: string
+    obs_type?: string
 
 }

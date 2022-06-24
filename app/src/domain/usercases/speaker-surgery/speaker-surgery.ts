@@ -7,9 +7,14 @@ export interface AddSpeakerSurgeryModel {
     idade_mes: number,
     data_surgery: string,
     des_type: string,
-    obs_type: string
+    obs_type?: string
 }
 
 export interface AddSpeakerSurgery {
     add(speakerSurgery: AddSpeakerSurgeryModel): Promise<SpeakerSurgery | Error>
+}
+
+
+export interface GetSpeakerSurgery {
+    get(id: number): Promise<SpeakerSurgery[] | null | Error>
 }
