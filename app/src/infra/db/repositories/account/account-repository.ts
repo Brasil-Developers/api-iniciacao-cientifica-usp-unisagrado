@@ -1,12 +1,24 @@
 import { AddAccountRepository as IAddAccountRepository } from "../../../../data/protocols/account/add-account-repository";
 import { GetAccountRepository as IGetAccountRepository } from "../../../../data/protocols/account/get-account-repository";
 import { LoginAccountRepository as ILoginAccountRepository } from "../../../../data/protocols/account/login-account-repository";
+import { ResetAccountRepository as IResetAccountRepository } from "../../../../data/protocols/account/reset-account-repository";
 import { Account } from "../../../../domain/models/Account";
 import { AddAccountModel } from "../../../../domain/usercases/account/add-account";
 import { LoginAccountModel } from "../../../../domain/usercases/account/login-account";
+import { ResetAccountModel } from "../../../../domain/usercases/account/reset-account";
 import { GenericError } from "../../../../presentation/errors/generic-error";
 
-export class AccountRepository implements IAddAccountRepository, IGetAccountRepository, ILoginAccountRepository  {
+export class AccountRepository implements IAddAccountRepository, IGetAccountRepository, ILoginAccountRepository, IResetAccountRepository {
+    async reset(accountData: ResetAccountModel): Promise<number | Error> {
+        const updatePassword: any = await Account.update({
+            senha: accountData.senha,
+        }, {
+            where: {
+                login: accountData.login
+            }
+        })
+        return updatePassword[0] as number;
+    }
 
     private async _exists(login: string): Promise<boolean> {
         const exists = await Account.findOne({
@@ -49,14 +61,14 @@ export class AccountRepository implements IAddAccountRepository, IGetAccountRepo
             where: {
                 id: accountId,
             },
-            attributes: ['id','nome', 'data_nasc', 'cpf', 'sexo', 'area_atuacao', 'numero_crfa', 'login', 'senha', 'questao1', 'questao1_outro', 'questao2', 'questao2_outro', 'ciencia_confirmacao'],
+            attributes: ['id', 'nome', 'data_nasc', 'cpf', 'sexo', 'area_atuacao', 'numero_crfa', 'login', 'senha', 'questao1', 'questao1_outro', 'questao2', 'questao2_outro', 'ciencia_confirmacao'],
         });
 
 
-        if(!user) {
+        if (!user) {
             return new GenericError('User not found');
         }
-        
+
         return user as Account;
     }
 
@@ -66,10 +78,10 @@ export class AccountRepository implements IAddAccountRepository, IGetAccountRepo
             where: {
                 login: accountData.login,
             },
-            attributes: ['id','nome', 'data_nasc', 'cpf', 'sexo', 'area_atuacao', 'numero_crfa', 'login', 'senha', 'questao1', 'questao1_outro', 'questao2', 'questao2_outro', 'ciencia_confirmacao'],
+            attributes: ['id', 'nome', 'data_nasc', 'cpf', 'sexo', 'area_atuacao', 'numero_crfa', 'login', 'senha', 'questao1', 'questao1_outro', 'questao2', 'questao2_outro', 'ciencia_confirmacao'],
         });
 
-        if(!user) {
+        if (!user) {
             return new GenericError('User not found or password is wrong');
         }
 
