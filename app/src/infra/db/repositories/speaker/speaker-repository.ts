@@ -1,6 +1,8 @@
 import { AddSpeakerRepository as IAddSpeakerRepository } from "../../../../data/protocols/speaker/add-speaker-repository";
 import { GetAllSpeakerRepository as IGetAllSpeakerRepository } from "../../../../data/protocols/speaker/get-all-speaker-repository";
 import { Speaker } from "../../../../domain/models/Speaker";
+import { SpeakerSurgery } from "../../../../domain/models/SpeakerSurgery";
+import { TypeSurgery } from "../../../../domain/models/TypeSurgery";
 import { AddSpeakerModel } from "../../../../domain/usercases/speaker/add-speaker";
 
 export class SpeakerRepository implements IAddSpeakerRepository, IGetAllSpeakerRepository {
@@ -12,7 +14,7 @@ export class SpeakerRepository implements IAddSpeakerRepository, IGetAllSpeakerR
             }
         });
 
-        if(response != null) {
+        if (response != null) {
             return true;
         }
 
@@ -34,7 +36,15 @@ export class SpeakerRepository implements IAddSpeakerRepository, IGetAllSpeakerR
     }
 
     async getAll(): Promise<Speaker[] | Error> {
-        const response = await Speaker.findAll();
+        const response = await Speaker.findAll({
+            include: [
+                {
+                    attributes: ['id', 'tipo_surgery', 'idade_ano', 'idade_mes', 'data_surgery', 'des_type', 'obs_type', 'createdAt', 'updatedAt'],
+                    model: SpeakerSurgery,
+                    required: false,
+                }
+            ]
+        });
         return response;
     }
 }
