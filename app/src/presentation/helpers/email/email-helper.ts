@@ -27,7 +27,15 @@ export class EmailHelper {
         });
     }
 
-
+    async retornaEmailRedefinirSenha(data: any): Promise<string> {
+        let html = await require("fs").readFileSync( __dirname + "/template-email-redefinir-senha.html", 'utf8');
+        
+        html = html.replaceAll("{USUARIO}",  data.usuario ?? "" )
+        html = html.replaceAll("{EMAIL}", data.login)
+        html = html.replaceAll("{SENHA}",  data.senha )
+        
+        return html
+    }
     async send(toEmail: string, subject: string, html: string) {
 
         return new Promise((resolve, reject) => {
