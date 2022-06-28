@@ -2,7 +2,9 @@ import { Optional } from 'sequelize'
 import { Table, Model, Column, DataType, Length, HasMany, ForeignKey } from 'sequelize-typescript'
 import { Account } from './Account'
 import { Location } from './Location'
+import { Record } from './Record'
 import { SpeakerSurgery } from './SpeakerSurgery'
+import { TaskRecord } from './TaskRecord'
 
 @Table
 export class Speaker extends Model {
@@ -36,5 +38,8 @@ export class Speaker extends Model {
 
     @HasMany(() => SpeakerSurgery)
     speakerSurgeries!: SpeakerSurgery[]
-    
+
+    @HasMany(() => Record)
+    records!: Record[]
+
 }
