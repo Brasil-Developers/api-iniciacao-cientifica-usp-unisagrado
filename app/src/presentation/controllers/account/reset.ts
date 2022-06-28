@@ -26,8 +26,8 @@ export class ResetAccountController implements Controller {
             }
 
             // REFACTOR
-            const emailHelper = new EmailHelper()
-            const responseEmail = await emailHelper.send(data.login, 'analise - Redefinir senha', '<h1>analise</h1><ul><li>Login:' + data.login + ' </li><li>Nova Senha: ' + newPassword + '</li></h1>')
+            const emailHelper = new EmailHelper();
+            const responseEmail = await emailHelper.send(data.login, 'analise - Redefinir senha', await emailHelper.retornaEmailRedefinirSenha(data))
 
             return ok(responseEmail);
 
