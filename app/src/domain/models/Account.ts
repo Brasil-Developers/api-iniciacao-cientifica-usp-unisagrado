@@ -1,6 +1,7 @@
 import { Table, Model, Column, DataType, BelongsTo, BelongsToMany, HasMany, ForeignKey } from 'sequelize-typescript'
 import { Document } from './Document'
 import { Location } from './Location'
+import { Task } from './Task'
 @Table
 export class Account extends Model {
   @Column
@@ -54,4 +55,7 @@ export class Account extends Model {
 
   @ForeignKey(() => Location)
   location?: Location
+
+  @HasMany(() => Task)
+  tasks?: Task[]
 }
