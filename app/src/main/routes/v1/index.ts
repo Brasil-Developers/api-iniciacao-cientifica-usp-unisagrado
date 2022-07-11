@@ -11,5 +11,5 @@ router.use('/account', account);
 router.use('/upload', upload);
 router.use('/speaker', speaker);
 router.use('/speakerSurgery', speakerSurgery);
-router.use('/task', task);
+router.use('/tasks', task);
 export default router;

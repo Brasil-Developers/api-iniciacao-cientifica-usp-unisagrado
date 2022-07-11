@@ -21,6 +21,11 @@ export class Task extends Model {
     @Column
     criado_por!: number
 
+    @Column({
+        type: DataType.INTEGER,
+    })
+    concluida?: number
+
     @HasMany(() => TaskRecord)
     records!: TaskRecord[]
 }
