@@ -10,6 +10,11 @@ import { GenericError } from "../../../../presentation/errors/generic-error";
 
 export class AccountRepository implements IAddAccountRepository, IGetAccountRepository, ILoginAccountRepository, IResetAccountRepository {
     async reset(accountData: ResetAccountModel): Promise<number | Error> {
+        
+        if (!await this._exists(accountData.login)) {
+            return new GenericError('Conta nao existente');
+        }
+        
         const updatePassword: any = await Account.update({
             senha: accountData.senha,
         }, {
